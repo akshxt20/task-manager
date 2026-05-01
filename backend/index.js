@@ -11,8 +11,9 @@ const cors = require("cors");
 const app = express();
 
 app.use(cors({
-  origin: "https://task-manager-e3i4udjs0-akshxt20s-projects.vercel.app",
-  credentials: true  // only needed if you use cookies/sessions
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
