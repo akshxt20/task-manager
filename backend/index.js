@@ -6,7 +6,13 @@ require('dotenv').config();
 const app = express();
 
 app.use(cors({
-  origin:'*',
+  origin:[
+    "http://localhost:3000",
+    "https://task-manager-e3i4udjs0-akshxt20s-projects.vercel.app",
+    "https://task-manager-production-552a.up.railway.app",
+    /\.vercel\.app$/   // allows any Vercel preview deployment URLs
+  ],
+  credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
