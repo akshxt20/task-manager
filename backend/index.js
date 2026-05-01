@@ -42,6 +42,18 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server running on port ${PORT}`);
-});
+
+// Run migrations on startup, then start listening
+const migrate = require('./migrate');
+migrate()
+  .then(() => {
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error('Migration failed, starting server anyway:', err.message);
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`Server running on port ${PORT} (migration failed)`);
+    });
+  });
