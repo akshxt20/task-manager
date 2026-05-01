@@ -9,12 +9,20 @@ const app = express();
 
 app.use(cors({
     origin: 'https://task-manager-sooty-iota-98.vercel.app',
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
 }));
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+// Handle preflight requests
+app.options('*', cors({
+    origin: 'https://task-manager-sooty-iota-98.vercel.app',
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
+}));
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
