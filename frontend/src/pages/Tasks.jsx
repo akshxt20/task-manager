@@ -271,7 +271,6 @@ const Tasks = () => {
               const reqTypes = t.submission_type ? t.submission_type.split(',') : [];
               const hasSubmissionReq = reqTypes.length > 0;
               const isMemberView = !isAdmin && user?.role === 'member';
-              const isAssignedToMe = t.assigned_to === user?.id;
 
               return (
                 <div key={t.id} className="glass-panel" style={{ opacity: t.status === 'done' ? 0.65 : 1 }}>
