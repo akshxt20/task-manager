@@ -9,9 +9,12 @@ app.use(cors({
   origin: [
     "http://localhost:3000",
     "https://task-manager-e3i4udjs0-akshxt20s-projects.vercel.app",
+    "https://task-manager-production-f9ba.up.railway.app",
     /\.vercel\.app$/   // allows any Vercel preview deployment URLs
   ],
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
