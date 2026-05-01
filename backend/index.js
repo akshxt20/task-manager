@@ -3,6 +3,8 @@ const cors = require('cors');
 const path = require('path');
 require('dotenv').config();
 
+const migrate = require('./migrate');
+
 const app = express();
 
 app.use(cors({
@@ -32,6 +34,14 @@ app.use((err, req, res, next) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server running on port ${PORT}`);
-});
+
+migrate()
+  .then(() => {
+    app.listen(PORT, '0.0.0.0', () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error('Failed to run migrations, server not started:', err.message);
+    process.exit(1);
+  });
