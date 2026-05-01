@@ -20,14 +20,7 @@ async function migrate() {
     `);
     console.log('users table ready.');
 
-    // Add role column if missing (for tables created before this field existed)
-    const [userCols] = await pool.query(`SHOW COLUMNS FROM users LIKE 'role'`);
-    if (userCols.length === 0) {
-      await pool.query(`ALTER TABLE users ADD COLUMN role VARCHAR(50) NOT NULL DEFAULT 'member'`);
-      console.log('Added role column to users.');
-    }
-
-    // -------------------------------------------------------------------------
+      // -------------------------------------------------------------------------
     // 2. projects — references users(id) via created_by
     // -------------------------------------------------------------------------
     await pool.query(`
