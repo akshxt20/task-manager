@@ -4,16 +4,12 @@ const path = require('path');
 require('dotenv').config();
 
 const app = express();
-//install:npm cors
-const express = require("express");
-const cors = require("cors");
-
-const app = express();
 
 app.use(cors({
-    origin: '*',
+    origin: 'https://task-manager-sooty-iota-98.vercel.app',
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true
 }));
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
