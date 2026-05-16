@@ -10,6 +10,7 @@ app.use(cors({
     "http://localhost:3000",
     "https://task-manager-e3i4udjs0-akshxt20s-projects.vercel.app",
     "https://task-manager-production-552a.up.railway.app",
+    "https://task-manager-sooty-iota-98.vercel.app",
     /\.vercel\.app$/   // allows any Vercel preview deployment URLs
   ],
   credentials: true,
