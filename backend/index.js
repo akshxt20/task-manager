@@ -5,18 +5,32 @@ require('dotenv').config();
 
 const app = express();
 
+// Allowed origins for CORS
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://task-manager-e3i4udjs0-akshxt20s-projects.vercel.app",
+  "https://task-manager-production-552a.up.railway.app",
+  "https://task-manager-sooty-iota-98.vercel.app"
+];
+
 app.use(cors({
-  origin:[
-    "http://localhost:3000",
-    "https://task-manager-e3i4udjs0-akshxt20s-projects.vercel.app",
-    "https://task-manager-production-552a.up.railway.app",
-    "https://task-manager-sooty-iota-98.vercel.app",
-    /\.vercel\.app$/   // allows any Vercel preview deployment URLs
-  ],
+  origin: function (origin, callback) {
+    // Allow requests with no origin (mobile apps, curl, etc.)
+    if (!origin) return callback(null, true);
+    // Allow any vercel.app subdomain or explicitly listed origins
+    if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+      return callback(null, true);
+    }
+    return callback(new Error('Not allowed by CORS'));
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+// Explicit preflight handler for all routes
+app.options('*', cors());
+
 app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
